@@ -59,7 +59,10 @@
             <form id="questionform" action="{% url  'onlinecourse:submit' course.id %}" method="post">
               {% for question in lesson.question_set.all %}
               <div class="card mt-1">
-                <div class="card-header"><h5>{{ question.content}}</h5></div>
+                <div class="d-flex justify-content-between card-header">
+                  <h5>{{ question.content}}</h5>
+                  <b class="text-info"> {{ question.get_weight }}% of total mark </b>
+                </div>
                 {% csrf_token %}
                 <div class="card-body form-group">
                   {% for choice in question.choice_set.all %}

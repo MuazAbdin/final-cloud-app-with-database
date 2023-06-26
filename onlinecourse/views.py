@@ -89,6 +89,7 @@ class CourseDetailView(generic.DetailView):
     template_name = 'onlinecourse/course_detail_bootstrap.html'
 
 
+
 def enroll(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     user = request.user
@@ -156,10 +157,10 @@ def show_exam_result(request, course_id, submission_id):
     score = 0.0
     for question_id, selected_ids in questions.items():
         question = Question.objects.get(pk=int(question_id))
-        score += question.get_score(selected_ids)
+        score += question.get_score(selected_ids) * question.get_weight()
 
     context = {'course': course,
-               'grade': score/len(questions) * 100,
+               'grade': score,
                'choices': choices,
                'questions': lesson.question_set.all()}
 
